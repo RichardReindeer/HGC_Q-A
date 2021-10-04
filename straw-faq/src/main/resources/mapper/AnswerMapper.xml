@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bambi.straw.faq.mapper.AnswerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="AnswerCommentMap" type="com.bambi.straw.commons.model.Answer">
+        <id column="id" property="id"/>
+        <result column="content" property="content"/>
+        <result column="like_count" property="likeCount"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_nick_name" property="userNickName"/>
+        <result column="quest_id" property="questId"/>
+        <result column="createtime" property="createtime"/>
+        <result column="accept_status" property="acceptStatus"/>
+        <!--property中的名称对应Answer实体类中的属性-->
+        <collection property="comments" ofType="com.bambi.straw.commons.model.Comment">
+            <id column="comment_id" property="id"></id>
+            <result column="comment_user_id" property="userId"></result>
+            <result column="comment_user_nick_name" property="userNickName"></result>
+            <result column="comment_content" property="content"></result>
+            <result column="comment_answer_id" property="answerId"></result>
+            <result column="comment_createtime" property="createtime"></result>
+        </collection>
+    </resultMap>
+    <!--参数是基本类型可以不写-->
+    <select id="findAnswersWithCommentByQuestionId" resultMap="AnswerCommentMap">
+        select a.id,
+               a.content,
+               a.like_count,
+               a.user_id,
+               a.user_nick_name,
+               a.quest_id,
+               a.createtime,
+               a.accept_status,
+               c.id             comment_id,
+               c.user_id        comment_user_id,
+               c.user_nick_name comment_user_nick_name,
+               c.content        comment_content,
+               c.answer_id      comment_answer_id,
+               c.createtime     comment_createtime
+        from answer a
+                 left join comment c on a.id = c.answer_id
+        where a.quest_id = #{questionId}
+        order by a.createtime, c.createtime
+    </select>
+</mapper>

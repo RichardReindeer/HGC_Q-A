@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.9.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.bambi</groupId>
+    <artifactId>Straw</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Straw</name>
+    <description>Demo project for Spring Boot</description>
+    <!--记得修改packaging!!!!!-->
+    <packaging>pom</packaging>
+    <!---->
+    <!--父认子操作！！！！！！-->
+    <modules>
+        <module>straw-resource</module>
+        <module>straw-eureka</module>
+        <!--网关-->
+        <module>straw-gateway</module>
+
+        <module>straw-sys</module>
+        <!--存放model-->
+        <module>straw-commons</module>
+        <!--faq模块添加-->
+        <module>straw-faq</module>
+        <module>straw-search</module>
+        <!--一个用来测试kafka的项目-->
+        <module>straw-kafka</module>
+    </modules>
+    <!--!!!!!!-->
+    <properties>
+        <java.version>11</java.version>
+        <!--设置mybatis版本-->
+        <mybatis.plus.version>3.3.1</mybatis.plus.version>
+        <!-- MyBatis 翻页查询工具 -->
+        <pagehelper.starter.version>1.3.0</pagehelper.starter.version>
+        <straw.commons.version>0.0.1-SNAPSHOT</straw.commons.version>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+    </properties>
+
+    <!--只要父子相认就会加载这个依赖-->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <!--父项目中使用dependencyManagement 来统一管理所有子项目中添加的各种依赖的版本-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.bambi</groupId>
+                <artifactId>straw-commons</artifactId>
+                <version>${straw.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <!--  ${mybatis.plus.version}
+                  的意思是从上面<properties>标签中取
+                  <mybatis.plus.version>标签中的值
+                -->
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

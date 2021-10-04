@@ -1,0 +1,129 @@
+### 必须每次编写命令的时候都要加上三个#,
+GET http://localhost:9200
+### 测试英文分词功能  消息头和消息正文之间需要通过CRLF回车换行符分割，所以需要有两个回车
+POST http://localhost:9200/_analyze
+Content-Type: application/json
+
+{
+  "analyzer": "ik_max_word",
+  "text": "雪花勇闯天涯"
+}
+
+### 创建 index
+PUT http://localhost:9200/questions
+### 删除一个Index
+DELETE http://localhost:9200/questions
+### 查看当前所有索引
+GET http://localhost:9200/_cat/indices?v
+
+### 设置index中的文档属性采用ik分词   目前所学的，只有text支持分词
+POST http://localhost:9200/questions/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "title": {
+      "type": "text",
+      "analyzer": "ik_max_word",
+      "search_analyzer": "ik_max_word"
+    },
+    "content": {
+      "type": "text",
+      "analyzer": "ik_max_word",
+      "search_analyzer": "ik_max_word"
+    }
+  }
+}
+### questions 中添加文档
+POST http://localhost:9200/questions/_create/1
+Content-Type: application/json
+
+{
+  "id":1,
+  "title":"Java基本数据类型有哪些",
+  "content":"面时候为啥要问基本类型这么简单问题呀，我们要如何回答呢？"
+}
+### questions 中添加文档
+POST http://localhost:9200/questions/_create/2
+Content-Type: application/json
+
+{
+  "id":2,
+  "title":"int类型的范围",
+  "content":"为啥要了解int类型的范围呢？"
+}
+
+### questions 中添加文档
+POST http://localhost:9200/questions/_create/3
+Content-Type: application/json
+
+{
+  "id":3,
+  "title":"常用集合类有哪些",
+  "content":"为啥企业经常问集合呀？该如何回复呢"
+}
+
+### questions 中添加文档
+POST http://localhost:9200/questions/_create/4
+Content-Type: application/json
+
+{
+  "id":4,
+  "title":"线程的run方法和start方法有啥区别",
+  "content":"run方法可以执行线程的计算过程， start也可以执行线程的计算过程，用途一样么？"
+}
+### 更新questions索引中的文档
+POST http://localhost:9200/questions/_doc/4/_update
+Content-Type: application/json
+
+{
+  "doc": {
+    "title": "Java线程的run方法和start方法有啥区别"
+  }
+}
+### 删除questions中的一个文档
+DELETE http://localhost:9200/questions/_doc/2
+### 查询数据
+GET http://localhost:9200/questions/_doc/4
+### 搜素 ES  match即模糊查询
+POST http://localhost:9200/questions/_search
+Content-Type: application/json
+
+{
+  "query": { "match": {"title": "类型" } }
+}
+### 多字段搜索
+POST http://localhost:9200/questions/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "bool": {
+      "should": [
+        { "match": { "title":  "java类型" }},
+        { "match": { "content": "java类型"}}
+      ]
+    }
+  }
+}
+
+
+### 条件搜索，查询用户12 或者 公开的 同时 标题或者内容中包含Java的问题
+POST http://localhost:9200/wenwenti/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "bool": {
+      "must": [{
+        "bool": {
+          "should": [{"match": {"title": "java"}}, {"match": {"content": "java"}}]
+        }
+      }, {
+        "bool": {
+          "should": [{"term": {"publicStatus": 1}}, {"term": {"userId": 11}}]
+        }
+      }]
+    }
+  }
+}
