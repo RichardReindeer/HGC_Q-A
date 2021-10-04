@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="straw-search" />
+        <module name="straw-commons" />
+        <module name="straw-sys" />
+        <module name="straw-faq" />
+        <module name="straw-eureka" />
+        <module name="straw-gateway" />
+        <module name="straw-resource" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="HGC_Q-A" target="11" />
+      <module name="straw-commons" target="11" />
+      <module name="straw-eureka" target="11" />
+      <module name="straw-faq" target="11" />
+      <module name="straw-gateway" target="11" />
+      <module name="straw-kafka" target="11" />
+      <module name="straw-resource" target="11" />
+      <module name="straw-search" target="11" />
+      <module name="straw-sys" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="straw-commons" options="-parameters" />
+      <module name="straw-eureka" options="-parameters" />
+      <module name="straw-faq" options="-parameters" />
+      <module name="straw-gateway" options="-parameters" />
+      <module name="straw-kafka" options="-parameters" />
+      <module name="straw-resource" options="-parameters" />
+      <module name="straw-search" options="-parameters" />
+      <module name="straw-sys" options="-parameters" />
+    </option>
+  </component>
+</project>
