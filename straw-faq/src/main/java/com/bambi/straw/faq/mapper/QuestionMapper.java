@@ -29,11 +29,4 @@ public interface QuestionMapper extends BaseMapper<Question> {
     Integer updateStatus(@Param("questionId") Integer questionId,
         @Param("status") Integer status
     );
-
-    @Select(
-            "select title, id\n" +
-                    "from question\n" +
-                    "where id in (select question_id from question_tag where tag_id = #{tagNum}) and user_id = #{userId} and delete_status = 0;"
-    )
-    List<Question> findQuestionWithTag(@Param("tagNum") Integer tagNum,@Param("userId") Integer userId);
 }

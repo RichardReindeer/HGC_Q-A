@@ -4,6 +4,8 @@ import com.bambi.straw.commons.model.Permission;
 import com.bambi.straw.commons.model.Role;
 import com.bambi.straw.commons.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,6 +24,7 @@ import java.util.List;
 @Component
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
+    private static Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
     @Resource
     private RestTemplate restTemplate;
 
@@ -45,6 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //凡是Rest接口返回List格式的，调用的时候使用对应泛型的数组类型接收
         //因为传递过程中数据是json格式，json格式是js代码， js代码没有List类型，只有数组类型
         Permission[] permissions = restTemplate.getForObject(url, Permission[].class, user.getId());
+        logger.debug("这是获取到的数组  :{}", Arrays.toString(permissions));
         //4.调用根据用户id获取的用户角色的Rest接口
         url = "http://sys-service/v1/auth/roles?userId={1}";
         Role[] roles = restTemplate.getForObject(url, Role[].class, user.getId());
@@ -71,7 +76,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .accountLocked(user.getLocked()==1)
                 .disabled(user.getEnabled()==0)
                 .build();
-
+        logger.info("获取到的userDetails对象 {}",userDetails.getUsername());
         return userDetails;
     }
 }

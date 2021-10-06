@@ -25,7 +25,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * <p>
- * 服务实现类
+ *  服务实现类
  * </p>
  *
  * @author MR.Bambi
@@ -90,21 +90,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return userDetails;
     }*/
 
+
+
+
     //
     @Override
     public void registerStudent(RegisterVo registerVo) {
         //1.判断RegisterVo对象中的邀请码是否正确
         QueryWrapper<Classroom> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("invite_code", registerVo.getInviteCode());//与用户填写的验证码比较
+        queryWrapper.eq("invite_code",registerVo.getInviteCode());//与用户填写的验证码比较
         Classroom classroom = classroomMapper.selectOne(queryWrapper);
-        log.debug("邀请码查询出的班级为:{}", classroom);
-        if (classroom == null) {
+        log.debug("邀请码查询出的班级为:{}",classroom);
+        if(classroom==null){
             //如果邀请码发生异常，
             throw ServiceException.unprocesabelEntity("邀请码错误");  //这异常自己写的哦
         }
         //2.判断registerVo对象中注册的用户名是否可用
         User user = userMapper.findUserByUserName(registerVo.getPhone());//判断手机号(昵称)
-        if (user != null) {
+        if(user!=null){
             //不是空则证明已存在，需要抛出异常
             throw ServiceException.unprocesabelEntity("账号已经被注册，请联系相关老师");
         }
@@ -114,14 +117,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         stu.setUsername(registerVo.getPhone());
         stu.setNickname(registerVo.getNickname());
-        stu.setPassword("{bcrypt}" + encoder.encode(registerVo.getPassword()));//已经加密的密码 需要搭配一个算法ID，不然会出问题
+        stu.setPassword("{bcrypt}"+encoder.encode(registerVo.getPassword()));//已经加密的密码 需要搭配一个算法ID，不然会出问题
         stu.setClassroomId(classroom.getId());
         stu.setCreatetime(LocalDateTime.now());//运行程序此时此刻的时分秒
         stu.setLocked(0);
         stu.setEnabled(1);
         //4.执行新增学生的user表
         int num = userMapper.insert(stu);
-        if (num != 1) {
+        if(num!=1){
             //到数据库的位置却添加不进去数据，则是服务器忙
             throw ServiceException.busy();
         }
@@ -130,18 +133,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         userRole.setUserId(stu.getId());//insert方法会自动将自增的id值赋值到stu的id属性中
         userRole.setRoleId(2);
         num = roleMapper.insert(userRole);
-        if (num != 1) {
+        if(num!=1){
             throw ServiceException.busy();
         }
+
+
 
 
     }
 
     //声明老师的List和Map缓存属性
     private List<User> masters = new CopyOnWriteArrayList<>();
-    private Map<String, User> masterMap = new ConcurrentHashMap<>();
+    private Map<String,User> masterMap = new ConcurrentHashMap<>();
     private Timer timer = new Timer();
-
     //编写一个初始化代码块，来设定每隔30分钟清空一次缓存
     //初始化代码块在构造方法执行之前运行
     {
@@ -152,7 +156,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                     @Override
                     public void run() {
                         //线程安全
-                        synchronized (masters) {
+                        synchronized (masters){
                             masters.clear();
                             masterMap.clear();
                             log.debug("缓存已经清空");
@@ -164,17 +168,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public List<User> getMasters() {
-        if (masters.isEmpty()) {
-            synchronized (masters) {
-                if (masters.isEmpty()) {
+        if(masters.isEmpty()){
+            synchronized (masters){
+                if(masters.isEmpty()){
                     QueryWrapper<User> query = new QueryWrapper<>();
                     //type的值为1则为老师
-                    query.eq("type", 1);
+                    query.eq("type",1);
                     List<User> list = userMapper.selectList(query);
                     //将全部老师保存到list缓存
                     masters.addAll(list);
                     //将全部讲师保存到Map缓存
-                    list.forEach(user -> masterMap.put(user.getNickname(), user));
+                    list.forEach(user -> masterMap.put(user.getNickname(),user));
                     //因为密码属性属于安全级别较高的属性
                     //不宜长时间保存在内存中
                     //所以我们编写代码清除密码或类似的"敏感信息"
@@ -188,30 +192,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public Map<String, User> getMastersMap() {
-        if (masterMap.isEmpty()) {
+        if(masterMap.isEmpty()){
             getMasters();
         }
         return masterMap;
     }
 
-    //    @Autowired
+//    @Autowired
 //    IQuestionService questionService;
 //    @Autowired
 //    IUserCollectService userCollectService;
     @Resource
-    private RestTemplate restTemplate;
-
+    private  RestTemplate restTemplate;
     @Override
     public UserVo getCurrentUserVo(String username) {
         //先根据用户名查询用户信息
-        UserVo userVo = userMapper.findUserVoByUserName(username);
+            UserVo userVo = userMapper.findUserVoByUserName(username);
 //        //根据用户id查询问题数
 //            int questions = questionService.countQuestionByUserId(userVo.getId());
 //            int collections = userCollectService.countQuestionCollectionByUserId(userVo.getId());
         String url = "http://faq-service/v1/questions/count?userId={1}";
-        Integer count = restTemplate.getForObject(url, Integer.class, userVo.getId());
+        Integer count = restTemplate.getForObject(url,Integer.class,userVo.getId());
         url = "http://faq-service/v1/userCollects/count?userId={1}";
-        Integer collectCount = restTemplate.getForObject(url, Integer.class, userVo.getId());
+        Integer collectCount = restTemplate.getForObject(url,Integer.class,userVo.getId());
 //        //赋值并返回\
 //        userVo.setQuestions(questions);
 //        userVo.setCollections(collections);
@@ -219,6 +222,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         userVo.setCollections(collectCount);
         return userVo;
     }
+
 
 
     @Override

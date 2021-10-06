@@ -2,14 +2,18 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="straw-kafka" />
         <module name="straw-search" />
-        <module name="straw-commons" />
         <module name="straw-sys" />
+        <module name="straw-commons" />
         <module name="straw-faq" />
+        <module name="straw-generator" />
+        <module name="straw-portal" />
         <module name="straw-eureka" />
         <module name="straw-gateway" />
         <module name="straw-resource" />
@@ -21,7 +25,9 @@
       <module name="straw-eureka" target="11" />
       <module name="straw-faq" target="11" />
       <module name="straw-gateway" target="11" />
+      <module name="straw-generator" target="11" />
       <module name="straw-kafka" target="11" />
+      <module name="straw-portal" target="11" />
       <module name="straw-resource" target="11" />
       <module name="straw-search" target="11" />
       <module name="straw-sys" target="11" />
@@ -33,7 +39,9 @@
       <module name="straw-eureka" options="-parameters" />
       <module name="straw-faq" options="-parameters" />
       <module name="straw-gateway" options="-parameters" />
+      <module name="straw-generator" options="-parameters" />
       <module name="straw-kafka" options="-parameters" />
+      <module name="straw-portal" options="-parameters" />
       <module name="straw-resource" options="-parameters" />
       <module name="straw-search" options="-parameters" />
       <module name="straw-sys" options="-parameters" />

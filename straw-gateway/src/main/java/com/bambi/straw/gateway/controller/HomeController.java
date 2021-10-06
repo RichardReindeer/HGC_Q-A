@@ -1,9 +1,8 @@
 package com.bambi.straw.gateway.controller;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,19 +14,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 //控制器的放啊返回字符串就可以指定模板名称了；
 @Controller
 @Slf4j
-@ApiModel("网关")
 public class HomeController {
+    private static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     public static final GrantedAuthority STUDENT =
             new SimpleGrantedAuthority("ROLE_STUDENT");
     public static final GrantedAuthority TEACHER =
             new SimpleGrantedAuthority("ROLE_TEACHER");
     //判断不同的身份跳转不同的首页
-    @ApiOperation("打开首页的index")
     @GetMapping("/index.html")
     public String index(
             @AuthenticationPrincipal UserDetails userDetails
             ) {
+        logger.info("这是拿到的userDetails对象 {}",userDetails.getUsername());
         if(userDetails.getAuthorities().contains(TEACHER)){
             return "index_teacher";
         }

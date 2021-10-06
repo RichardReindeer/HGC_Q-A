@@ -6,8 +6,6 @@ import com.bambi.straw.faq.vo.QuestionVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 
-import java.util.List;
-
 /**
  * <p>
  *  服务类
@@ -37,14 +35,5 @@ public interface IQuestionService extends IService<Question> {
 
     //分页查询当前数据库中所有问题的方法
     PageInfo<Question> getQuestion(Integer pageNum , Integer pageSize);
-
-    /**
-     * 根据问题标签显示不同的问题
-     * @param username 用户名
-     * @param tagNum 标签id
-     * @return
-     */
-    PageInfo<Question> getQuestionWithTag(String username , Integer tagNum ,Integer pageNum, Integer pageSize);
-
 
 }

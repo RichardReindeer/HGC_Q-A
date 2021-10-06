@@ -10,8 +10,6 @@ import com.bambi.straw.faq.service.ICommentService;
 import com.bambi.straw.faq.vo.CommentVo;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +28,6 @@ import java.time.LocalDateTime;
 @Service
 @Slf4j
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements ICommentService {
-    private static Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
-
     @Resource
     private RibbonClient ribbonClient;
     @Autowired
@@ -40,93 +36,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Override
     @Transactional
     public Comment saveComment(CommentVo commentVo, String username) {
-        return save(commentVo, username);
-    }
-
-    //删除评论
-    @Override
-    @Transactional
-    public boolean removeComment(Integer commentId, String username) {
-        return remove(commentId, username);
-    }
-
-    //修改评论
-    @Transactional
-    @Override
-    public Comment updateComment(Integer commentId, String content, String username) {
-        return update(commentId, content, username);
-    }
-
-    /**
-     * 对评论进行更新操作
-     * 判断当前用户是否为评论的发布者
-     *
-     * @param commentId 当前评论的id
-     * @param content   评论正文
-     * @param username  用户姓名
-     * @return
-     */
-    private Comment update(Integer commentId, String content, String username) {
-        logger.info("开始执行评论更新操作");
-        User user = ribbonClient.getUser(username);
-        if (user == null) {
-            logger.info("当前用户名无法查询到用户");
-            throw ServiceException.invalidRequest("用户查询失败");
-        }
-
-        Comment comment = commentMapper.selectById(commentId);
-
-        if (user.getType() != null && user.getType() == 1
-                || user.getId().equals(comment.getUserId())
-        ) {
-
-            comment.setContent(content);
-            int num = commentMapper.updateById(comment);
-            if (num != 1) {
-                throw ServiceException.busy();
-            }
-            return comment;
-        }
-        throw ServiceException.invalidRequest("没有权限");
-    }
-
-    /**
-     * 对评论进行删除操作
-     * 对用户权限进行判定
-     * 判定条件： 删除评论者需是评论人自己或老师
-     * 进行删除操作会产生一定的开销，所以事先进行权限判定，如果条件不合适就不用连数据库
-     * <p>
-     * <p>
-     * 当包装类进行==判定时，底层在编译时会自动变为.equals
-     *
-     * @param commentId 评论id
-     * @param username  用户名
-     * @return
-     */
-    private boolean remove(Integer commentId, String username) {
-        logger.info("开始执行评论删除操作");
-        User user = ribbonClient.getUser(username);
-        if (user.getType() != null && user.getType() == 1) {
-            int num = commentMapper.deleteById(commentId);
-            return num == 1;
-        }
-        Comment comment = commentMapper.selectById(commentId);
-        if (user.getId().equals(comment.getUserId())) {
-            int num = commentMapper.deleteById(commentId);
-            return num == 1;
-        }
-        throw ServiceException.invalidRequest("权限不足");
-    }
-
-    /**
-     * 对新评论进行保存操作，没什么可说的
-     *
-     * @param commentVo
-     * @param username
-     * @return
-     */
-    private Comment save(CommentVo commentVo, String username) {
-        logger.info("接收到新评论，save方法开始执行");
         User user = ribbonClient.getUser(username);
         Comment comment = new Comment()
                 .setAnswerId(commentVo.getAnswerId())
@@ -136,9 +45,58 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
                 .setUserNickName(user.getNickname());
         int num = commentMapper.insert(comment);
         if (num != 1) {
-            logger.error("服务器忙");
             throw ServiceException.busy();
         }
         return comment;
+    }
+
+    //删除评论
+    @Override
+    public boolean removeComment(Integer commentId, String username) {
+        //获得用户信息
+        User user = ribbonClient.getUser(username);
+        //判断是不是老师
+        /*
+        包装类进行==判断的时候，底层在编译的时候会变成.equals
+        &&是短路判断，前面不符合，就不执行(这是基础啊)
+         */
+        if (user.getType() != null && user.getType() == 1) {
+            int num = commentMapper.deleteById(commentId);
+            return num == 1;
+        }
+        //判断当前登录用户是不是评论的发布者 <---这个操作需要连库，会有较大开销，所以可以先进行身份判断(不用连库)
+        //先查询当前评论的详情信息
+        Comment comment = commentMapper.selectById(commentId);
+        //判断
+        if (user.getId().equals(comment.getUserId())) {
+            //可以删除自己发布的评论
+            int num = commentMapper.deleteById(commentId);
+            return num == 1;
+        }
+        //不符合删除标准可以直接返回异常
+        throw ServiceException.invalidRequest("权限不足");
+    }
+
+    //修改评论
+    @Override
+    public Comment updateComment(Integer commentId, String content, String username) {
+
+        //查询当前用户的信息
+        User user = ribbonClient.getUser(username);
+        //查询当前评论的信息
+        Comment comment = commentMapper.selectById(commentId);
+        //判断是不是老师或是不是评论发布者
+        if (user.getType() != null && user.getType() == 1
+                || user.getId().equals(comment.getUserId())
+        ) {
+            //执行修改
+            comment.setContent(content);
+            int num = commentMapper.updateById(comment);
+            if(num != 1){
+                throw ServiceException.busy();
+            }
+            return comment;
+        }
+        throw ServiceException.invalidRequest("没有权限");
     }
 }

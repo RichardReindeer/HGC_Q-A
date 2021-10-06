@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上载演示</title>
+    <!--要调用ajax必须使用jquery-->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+<!--想上传文件，method 必须是post   写enctype = "multipart/form-data ，此法为将文件转为二进制，使用二进制提交
+    要上传的文件使用<input id="imageFile" type="file" name="imageFile"> 表示type是file
+-->
+<form id="demoForm" method="post"
+      enctype="multipart/form-data"
+      action="/upload/file" >
+    <div>
+        <label>上传文件
+            <input id="imageFile" type="file" name="imageFile">
+        </label>
+    </div>
+    <button type="submit">上传文件</button>
+</form>
+<img id="image" src=""  alt="">
+</body>
+<script src="js/utils.js"></script>
+<script >
+    //id为demoForm的表单提交的时候会触发上传文件的方法
+    $("#demoForm").submit(function (){
+        //找到/获得用户选中的文件
+        //js默认从文件域中获得用户选中的文件，是个数组
+        let files = document.getElementById("imageFile").files;
+        if(files.length>0){
+            //用户选中文件准备上传
+            //获得数组中的第一个文件
+            let file = files[0];
+            //执行上传
+            uploadImages(file);
+        }else{
+            //用户没有选中文件
+            alert("请选择文件");
+        }
+        //表单提交事件 返回false 能阻止表单提交
+        return false;
+    })
+
+    function uploadImages(file){
+        //要想异步上传包含文件的内容，必须构建一个formData对象
+        let form = new FormData();
+        //将文件添加到表单数据(formData)对象中
+        //第一个参数是name属性，第二个参数是需要上传的对象
+        form.append("imageFile",file);
+
+        $.ajax({
+            url:"/upload/image",
+            method:"POST",
+            data:form,
+            //要想发送异步请求上传文件，必须编写下面两行
+
+            //这两个参数设置，让文件以二进制的方式传递到控制台
+            contentType:false,
+            processData:false,
+            success:function (result){
+                //根据r类中的code输出结果
+                if(result.code==OK){
+                    //alert(result.message);
+                    //将上传的图片直接显示在页面上
+                    $("#image").attr("src",result.message);
+                }else {
+                    alert(result.message);
+                }
+            }
+        })
+    }
+</script>
+</html>

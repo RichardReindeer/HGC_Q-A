@@ -224,34 +224,4 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         List<Question> list =questionMapper.selectList(null);
         return new PageInfo<>(list);
     }
-
-    @Override
-    public PageInfo<Question> getQuestionWithTag(String username, Integer tagNum, Integer pageNum, Integer pageSize) {
-        if (username == null) {
-            log.error("username 是空");
-            return null;
-        }
-        User user = ribbonClient.getUser(username);
-        if (user != null) {
-            //3.执行查询返回结果
-            //执行分页命令
-            //PageHelper提供的方法startPage规定查询第几页，每页多少条
-            //同一个方法中没有线程安全问题
-            PageHelper.startPage(pageNum, pageSize);
-            List<Question> questionWithTag = questionMapper.findQuestionWithTag(tagNum, user.getId());
-            //不要忘记返回list
-            log.debug("当前用户的问题数:{}", questionWithTag.size());
-            //遍历所有查询出来的问题，将每个问题的标签列表都赋上值
-            questionWithTag.forEach(question -> {
-                //调用我们编写的根据TagNames获得tags的方法
-                List<Tag> tags = tagNames2Tags(question.getTagNames());
-                question.setTags(tags);
-            });
-            //实例化PageInfo 会自动计算分页数据
-            //List是构造方法的参数，会将这个list保存在pageInfo中
-            return new PageInfo<Question>(questionWithTag);
-        }
-        log.error("user==null !! in QuestionServiceImpl");
-        return null;
-    }
 }

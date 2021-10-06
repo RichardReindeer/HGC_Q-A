@@ -7,6 +7,9 @@
       <module fileurl="file://$PROJECT_DIR$/straw-eureka/straw-eureka.iml" filepath="$PROJECT_DIR$/straw-eureka/straw-eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/straw-faq/straw-faq.iml" filepath="$PROJECT_DIR$/straw-faq/straw-faq.iml" />
       <module fileurl="file://$PROJECT_DIR$/straw-gateway/straw-gateway.iml" filepath="$PROJECT_DIR$/straw-gateway/straw-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/straw-generator/straw-generator.iml" filepath="$PROJECT_DIR$/straw-generator/straw-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/straw-kafka/straw-kafka.iml" filepath="$PROJECT_DIR$/straw-kafka/straw-kafka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/straw-portal/straw-portal.iml" filepath="$PROJECT_DIR$/straw-portal/straw-portal.iml" />
       <module fileurl="file://$PROJECT_DIR$/straw-resource/straw-resource.iml" filepath="$PROJECT_DIR$/straw-resource/straw-resource.iml" />
       <module fileurl="file://$PROJECT_DIR$/straw-search/straw-search.iml" filepath="$PROJECT_DIR$/straw-search/straw-search.iml" />
       <module fileurl="file://$PROJECT_DIR$/straw-sys/straw-sys.iml" filepath="$PROJECT_DIR$/straw-sys/straw-sys.iml" />

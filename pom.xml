@@ -18,6 +18,9 @@
     <!---->
     <!--父认子操作！！！！！！-->
     <modules>
+        <module>straw-portal</module>
+        <!--代码生成器 也算是straw的子项目-->
+        <module>straw-generator</module>
         <module>straw-resource</module>
         <module>straw-eureka</module>
         <!--网关-->

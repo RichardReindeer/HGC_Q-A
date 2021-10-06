@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bambi.straw.portal.mapper.AnswerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bambi.straw.portal.model.Answer">
+        <id column="id" property="id" />
+        <result column="content" property="content" />
+        <result column="like_count" property="likeCount" />
+        <result column="user_id" property="userId" />
+        <result column="user_nick_name" property="userNickName" />
+        <result column="quest_id" property="questId" />
+        <result column="createtime" property="createtime" />
+        <result column="accept_status" property="acceptStatus" />
+    </resultMap>
+
+</mapper>
