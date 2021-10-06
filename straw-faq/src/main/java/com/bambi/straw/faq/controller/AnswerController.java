@@ -1,11 +1,11 @@
 package com.bambi.straw.faq.controller;
 
-
 import com.bambi.straw.commons.model.Answer;
 import com.bambi.straw.commons.vo.R;
 import com.bambi.straw.faq.service.IAnswerService;
 import com.bambi.straw.faq.vo.AnswerVo;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,70 +17,97 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * <p>
- *  前端控制器
- * </p>
+ * 描述：
+ * 答案控制器层
+ * 对老AnswerController进行代码可读性优化
+ * <pre>
+ * HISTORY
+ * ****************************************************************************
+ *  ID     DATE          PERSON          REASON
+ *  1      2021/10/6 20:44    Bambi        Create
+ * ****************************************************************************
+ * </pre>
  *
- * @author MR.Bambi
- * @since 2021-04-14
+ * @author Bambi
+ * @since 1.0
  */
 @RestController
 @RequestMapping("/v1/answers")
-@Slf4j
 public class AnswerController {
+    private static Logger logger = LoggerFactory.getLogger(AnswerController.class);
 
     @Resource
     private IAnswerService answerService;
 
-    //编写新增讲师回复的控制器方法
-    //postMapping后面什么都不写相当于双引号("")
+    /**
+     * 老师回复请求接收
+     * 使用PreAuthorize验证老师身份
+     *
+     * @param answerVo    接收到的回复
+     * @param result
+     * @param userDetails 用户身份详情信息
+     * @return 标准返回参数实体类 使用201返回新增操作，使用200返回查询操作
+     */
     @PostMapping
-    //只有老师能回答问题，所以限制有回答权限或者有老师身份的人才能运行这个方法
-    //
-    //@PreAuthorize("hasAuthority('/question/answer')")//限制
-    //上面的方法也可以，但是也可以直接判断是否是老师这个《角色》
-    @PreAuthorize("hasRole('TEACHER')")//自动帮你加ROLE进行权限判断
+    @PreAuthorize("hasRole('TEACHER')")
     public R<Answer> postAnswer(
             @Validated AnswerVo answerVo, BindingResult result,
             @AuthenticationPrincipal UserDetails userDetails
-            ){
-        log.debug("接收信息:{}",answerVo);
-        if(result.hasErrors()){
-            String msg = result.getFieldError().getDefaultMessage();
-            //错误信息，（验证结果)
-            return R.unproecsableEntity(msg);
+    ) {
+        logger.info("postAnswer is starting!!!");
+        if (result.hasErrors()) {
+            logger.info("has some Error in AnswerController postAnswer()");
+            String defaultMessage = result.getFieldError().getDefaultMessage();
+            return R.unproecsableEntity(defaultMessage);
         }
-        //调用业务逻辑层
-        //200一般用于查询
-        //201一般用于新增
-        Answer answer = answerService.saveAnswer(answerVo,userDetails.getUsername());
+        Answer answer = answerService.saveAnswer(answerVo, userDetails.getUsername());
+        logger.info("answer is {}", answer.getContent());
         return R.created(answer);
     }
 
-    //查询当前问题所有回答的控制器方法
-    //这个控制器响应的路径url可能是
-    //localhost:8080/v1/answers/question/151
-    //意思是查询151号问题的所有回答
-
-    @GetMapping("/question/{id}")
-    public R<List<Answer>> questionAnswers(
+    /**
+     * 根据问题id获取对应答案
+     *
+     * @param id 问题id
+     * @return 该问题下的所有回复内容
+     */
+    @RequestMapping("/question/{id}")
+    public R<List<Answer>> questionsAns(
             @PathVariable Integer id
-    ){
-        if(id==null) return R.invalidRequest("问题ID不能为空");
-        List<Answer> answers = answerService.getAnswersByQuestion(id);
-        return R.ok(answers);
+    ) {
+        logger.info("questionsAns is starting !!!!");
+        if (id == null) {
+            logger.error("question id is Null");
+            return R.invalidRequest("问题ID不能为空");
+        }
+        List<Answer> answersByQuestion = answerService.getAnswersByQuestion(id);
+        logger.info("questionsAns is ending !!");
+        return R.ok(answersByQuestion);
     }
 
-    @GetMapping("/{id}/solved")
+
+    /**
+     * 根据答案id进行答案的采纳
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("/{id}/solved")
     public R solved(
             @PathVariable Integer id
-    ){
-        boolean isAccept = answerService.accept(id);
-        if(isAccept){
+    ) {
+        logger.info("solved is starting ! ! !");
+        if (id == null) {
+            logger.error("id is null! ! ! ");
+            return R.invalidRequest("id is null");
+        }
+        boolean accept = answerService.accept(id);
+        if (accept) {
+            logger.info("采纳成功");
             return R.ok("采纳成功");
-        }else {
+        } else {
+            logger.error("采纳失败，检查id是否正确");
             return R.notFound("采纳失败");
         }
     }
-
 }

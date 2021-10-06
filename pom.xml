@@ -18,22 +18,16 @@
     <!---->
     <!--父认子操作！！！！！！-->
     <modules>
-        <module>straw-portal</module>
-        <!--代码生成器 也算是straw的子项目-->
-        <module>straw-generator</module>
         <module>straw-resource</module>
         <module>straw-eureka</module>
         <!--网关-->
         <module>straw-gateway</module>
-
         <module>straw-sys</module>
         <!--存放model-->
         <module>straw-commons</module>
         <!--faq模块添加-->
         <module>straw-faq</module>
         <module>straw-search</module>
-        <!--一个用来测试kafka的项目-->
-        <module>straw-kafka</module>
     </modules>
     <!--!!!!!!-->
     <properties>
@@ -86,10 +80,6 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-extension</artifactId>
-                <!--  ${mybatis.plus.version}
-                  的意思是从上面<properties>标签中取
-                  <mybatis.plus.version>标签中的值
-                -->
                 <version>${mybatis.plus.version}</version>
             </dependency>
             <dependency>
