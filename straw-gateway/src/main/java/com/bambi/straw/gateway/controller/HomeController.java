@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 //@Controller来标注控制器，
 //控制器的放啊返回字符串就可以指定模板名称了；
@@ -74,5 +75,39 @@ public class HomeController {
     @GetMapping("/search.html")
     public String search(){
         return "search";
+    }
+
+    @RequestMapping("/tag/tag_question.html")
+    public String tags(){
+        logger.debug("------------------------------- 走到了tags方法");
+        return "tags/tag_question";
+    }
+
+    /**
+     * 用户收藏页面跳转
+     * @return
+     */
+    @RequestMapping("/personal/collect.html")
+    public String personalCollect(){
+        return "personal/collect";
+    }
+
+    /**
+     * 用户问题跳转
+     * @return
+     */
+    @RequestMapping("/personal/myQuestion.html")
+    public String personalQuestion(){
+        return "personal/myQuestion";
+    }
+
+    /**
+     * 用户任务跳转
+     * @return
+     */
+    @RequestMapping("/personal/task.html")
+    public String personalTask(){
+        logger.info("跳转至用户任务页面");
+        return "personal/task";
     }
 }

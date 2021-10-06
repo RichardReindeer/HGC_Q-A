@@ -6,20 +6,29 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>HGC_Q&A首页</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <script src="/bower_components/polyfill/dist/polyfill.min.js"></script>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/@popperjs/core/dist/umd/popper.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/polyfill/dist/polyfill.min.js"></script>
-    <script src="bower_components/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bower_components/summernote/dist/summernote-bs4.min.css">
+    <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="../bower_components/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="../bower_components/vue-select/dist/vue-select.css">
+
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../bower_components/polyfill/dist/polyfill.min.js"></script>
+    <script src="../bower_components/summernote/dist/summernote-bs4.js"></script>
+    <script src="../bower_components/summernote/dist/lang/summernote-zh-CN.min.js"></script>
+    <script src="../bower_components/vue/dist/vue.js"></script>
+    <script src="../bower_components/select2/dist/js/select2.min.js"></script>
+    <script src="../bower_components/select2/dist/js/i18n/zh-CN.js"></script>
+    <script src="../bower_components/vue-select/dist/vue-select.js"></script>
 </head>
 <body>
 <header class="container-fluid mb-3 bg-light">
 
     <nav class="navbar navbar-expand-lg   navbar-light bg-light">
-        <a class="navbar-brand" href="index.html"> <img alt="工程问答" src="img/straw_logo_239x80.png" height="33">
+        <a class="navbar-brand" href="/index.html"> <img alt="工程问答" src="../img/straw_logo_239x80.png" height="33">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,10 +37,10 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="index.html">首页</a>
-                <a class="nav-item nav-link active" href="personal/myQuestion.html">提问</a>
-                <a class="nav-item nav-link active" href="personal/task.html">任务</a>
-                <a class="nav-item nav-link active" href="personal/collect.html">收藏</a>
+                <a class="nav-item nav-link active" href="/index.html">首页</a>
+                <a class="nav-item nav-link active" href="/personal/myQuestion.html">提问</a>
+                <a class="nav-item nav-link active" href="/personal/task.html">任务</a>
+                <a class="nav-item nav-link active" href="/personal/collect.html">收藏</a>
             </div>
 
         </div>
@@ -42,7 +51,7 @@
             <button class="btn btn-sm btn-outline-secondary my-2 my-sm-0 rounded-pill" type="button"
                     @click="search"><i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
-        <a type="button" class="btn btn-outline-primary btn-sm mx-2" href="question/create.html">我要提问</a>
+        <a type="button" class="btn btn-outline-primary btn-sm mx-2" href="/question/create.html">我要提问</a>
         <div id="noticeCount">
             <button type="button" class="btn btn-default btn-xs fa fa-bell-o" data-toggle="modal"
                     data-target="#noticeModal">
@@ -52,15 +61,15 @@
         <div class="dropdown   py-1 mr-3 ">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                <img style="width: 30px;height: 30px;border-radius: 50%;" src="img/user.jpg">
+                <img style="width: 30px;height: 30px;border-radius: 50%;" src="../img/user.jpg">
             </button>
             <div class="dropdown-menu dropdown-menu-sm-left text-sm border-0" aria-labelledby="dropdownMenu2">
-                <a class="dropdown-item " href="personal/userInfo.html">账号设置</a>
+                <a class="dropdown-item " href="/personal/userInfo.html">账号设置</a>
                 <div class="dropdown-divider"></div>
                 <button data-toggle="modal" data-target="#invitecodeModal" class="dropdown-item btn-default">查看邀请码
                 </button>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item " href="login.html">注销登录</a>
+                <a class="dropdown-item " href="/login.html">注销登录</a>
             </div>
         </div>
     </nav>
@@ -90,7 +99,7 @@
                              aria-labelledby="noAnswer-tab">
                             <div class="list-group list-group-flush">
                                 <h6 class="text-dark my-2" style="display: none">暂无新消息！</h6>
-                                <a href="notice/all.html" style="display: none" class="text-info">查看历史消息</a>
+                                <a href="/notice/all.html" style="display: none" class="text-info">查看历史消息</a>
                                 <!--只显示10条消息-->
                                 <div class="list-group-item list-group-item-action">
                                     <span>张三</span>
@@ -102,7 +111,7 @@
                                 </div>
                             </div>
                             <div class="col-12 mt-2 ">
-                                <a href="notice/all.html" class="text-info">查看全部消息</a>
+                                <a href="/notice/all.html" class="text-info">查看全部消息</a>
                             </div>
                         </div>
                         <div class="tab-pane fade row" id="announcement" role="tabpanel" aria-labelledby="unSolve-tab">
@@ -155,7 +164,9 @@
 <!--引入标签的导航栏-->
 <div class="container-fluid" th:fragment="tags_nav">
     <div class="nav font-weight-light" id="tagsApp">
-        <a href="tag/tag_question.html" class="nav-item nav-link text-info"><small>全部</small></a>
+        <a href="/tag/tag_question.html" class="nav-item nav-link text-info"
+           v-on:click.prevent="loadQuestionWithTags(-1,1)"
+        ><small>全部</small></a>
 
         <!-- v-for= "tag in tags"
              v-for 表示循环遍历指定的数组或集合
@@ -163,8 +174,9 @@
              tags 是Vue代码中对应的绑定的变量
 
          -->
-        <a href="tag/tag_question.html" class="nav-item nav-link text-info"
+        <a href="/tag/tag_question.html" class="nav-item nav-link text-info"
            v-for="tag in tags"
+           v-on:click.prevent="loadQuestionWithTags(tag.id,1) "
         >
             <small v-text="tag.name">Java基础</small>
         </a>
@@ -180,7 +192,7 @@
                                                                            aria-hidden="true"></i> 我的问答</h4>
                     <div class="row" style="display: none">
                         <div class="alert alert-warning w-100" role="alert">
-                            抱歉您还没有提问内容， <a href="question/create.html" class="alert-link">您可以点击此处提问</a>，或者点击标签查看其它问答
+                            抱歉您还没有提问内容， <a href="/question/create.html" class="alert-link">您可以点击此处提问</a>，或者点击标签查看其它问答
                         </div>
                     </div>
                     <div class="media bg-white m-2 p-3" v-for="question in questions">
@@ -196,7 +208,7 @@
                                 </div>
                                 <div class="col-md-12 col-lg-10">
                                     <h5 class="mt-0 mb-1 text-truncate">
-                                        <a class="text-dark" href="question/detail.html"
+                                        <a class="text-dark" href="/question/detail.html"
                                            v-text="question.title"
                                            v-bind:href="'/question/detail.html?'+question.id"
                                         >
@@ -216,7 +228,7 @@
                             <div class="row">
                                 <div class="col-12 mt-1 text-info">
                                     <i class="fa fa-tags" aria-hidden="true"></i>
-                                    <a class="text-info badge badge-pill bg-light" href="tag/tag_question.html"
+                                    <a class="text-info badge badge-pill bg-light" href="/tag/tag_question.html"
                                        v-for="tag in question.tags"
                                     >
                                         <small v-text="tag.name">Java基础</small>
@@ -240,7 +252,7 @@
                         <!-- / class="media-body"-->
 
                         <!--显示图片 谁后出现听谁的-->
-                        <img src="img/tags/example0.jpg"
+                        <img src="../img/tags/example0.jpg"
                              class="ml-3 border img-fluid rounded"
                              alt="" width="208" height="116"
                              v-bind:src="question.tagImage"
@@ -287,15 +299,15 @@
                                 <div><strong>0</strong></div>
                                 <div>回答</div>
                             </a>
-                            <a class="list-inline-item mx-3 my-1 text-center" href="personal/myQuestion.html">
+                            <a class="list-inline-item mx-3 my-1 text-center" href="/personal/myQuestion.html">
                                 <div><strong v-text="user.questions">10</strong></div>
                                 <div>提问</div>
                             </a>
-                            <a class="list-inline-item mx-3 my-1 text-center" href="personal/collect.html">
+                            <a class="list-inline-item mx-3 my-1 text-center" href="/personal/collect.html">
                                 <div><strong v-text="user.collections">0</strong></div>
                                 <div>收藏</div>
                             </a>
-                            <a class="list-inline-item mx-3 my-1 text-center" href="personal/task.html">
+                            <a class="list-inline-item mx-3 my-1 text-center" href="/personal/task.html">
                                 <div><strong>0</strong></div>
                                 <div>任务</div>
                             </a>
@@ -307,7 +319,7 @@
             <div class="container-fluid bg-light mt-5">
                 <h4 class="m-2 p-2 font-weight-light"><i class="fa fa-list" aria-hidden="true"></i> 热点问题</h4>
                 <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
+                    <a href="/question/detail.html" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h6 class="mb-1 text-dark">java基础作业03</h6>
                         </div>
@@ -325,7 +337,7 @@
                     </a>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
+                    <a href="/question/detail.html" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h6 class="mb-1 text-dark">java基础作业02</h6>
                         </div>
@@ -355,9 +367,9 @@
     </p>
 </footer>
 </body>
-<script src="js/utils.js"></script>
-<script src="js/tags_nav.js"></script>
-<script src="js/index.js"></script>
-<script src="js/user_info.js"></script>
-<script src="js/search_app.js"></script>
+<script src="../js/utils.js"></script>
+<!--<script src="../js/tags_nav.js"></script>-->
+<script src="../js/tagsIndex.js"></script>
+<script src="../js/user_info.js"></script>
+<script src="../js/search_app.js"></script>
 </html>
