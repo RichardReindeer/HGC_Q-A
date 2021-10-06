@@ -6,7 +6,6 @@ import com.bambi.straw.commons.vo.R;
 import com.bambi.straw.faq.service.IAnswerService;
 import com.bambi.straw.faq.vo.AnswerVo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

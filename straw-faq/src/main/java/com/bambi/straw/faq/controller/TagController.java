@@ -2,7 +2,6 @@ package com.bambi.straw.faq.controller;
 
 
 import com.bambi.straw.commons.model.Tag;
-import com.bambi.straw.commons.vo.R;
 import com.bambi.straw.faq.service.ITagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

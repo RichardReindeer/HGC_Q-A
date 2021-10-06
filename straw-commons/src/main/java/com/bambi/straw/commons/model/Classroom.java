@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *   数据库班级表参数实体类
  * </p>
  *
  * @author MR.Bambi

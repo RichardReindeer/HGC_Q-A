@@ -1,16 +1,28 @@
 package com.bambi.straw.commons.vo;
 
-
 import com.bambi.straw.commons.service.ServiceException;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
+/**
+ * 描述：
+ *   统一响应实体类
+ * <pre>
+ * HISTORY
+ * ****************************************************************************
+ *  ID     DATE          PERSON          REASON
+ *  1      2021/10/6 20:33    Bambi        Create
+ * ****************************************************************************
+ * </pre>
+ *
+ * @author Bambi
+ * @since 1.0
+ */
 @Data
 @Accessors(chain = true)
 public class R<T> implements Serializable {
-
     /** 200 OK - [GET]：服务器成功返回用户请求的数据 */
     public static final int OK = 200;
 
@@ -156,4 +168,8 @@ public class R<T> implements Serializable {
         return new R().setCode(INTERNAL_SERVER_ERROR)
                 .setMessage(e.getMessage());
     }
+
+
+
+
 }

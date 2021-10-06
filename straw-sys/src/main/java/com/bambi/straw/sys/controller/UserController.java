@@ -3,7 +3,6 @@ package com.bambi.straw.sys.controller;
 
 import com.bambi.straw.commons.model.User;
 import com.bambi.straw.commons.service.ServiceException;
-import com.bambi.straw.commons.vo.R;
 import com.bambi.straw.sys.service.IUserService;
 import com.bambi.straw.sys.vo.RegisterVo;
 import com.bambi.straw.sys.vo.UserVo;

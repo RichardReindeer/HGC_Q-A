@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *    权限表参数实体类
  * </p>
  *
  * @author MR.Bambi

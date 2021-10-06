@@ -1,9 +1,21 @@
 package com.bambi.straw.commons.service;
 
-
 import com.bambi.straw.commons.vo.R;
 
-//发生异常的时候，状态码默认值为500
+/**
+ * 描述：
+ *   服务异常处理类
+ * <pre>
+ * HISTORY
+ * ****************************************************************************
+ *  ID     DATE          PERSON          REASON
+ *  1      2021/10/6 20:30    Bambi        Create
+ * ****************************************************************************
+ * </pre>
+ *
+ * @author Bambi
+ * @since 1.0
+ */
 public class ServiceException extends RuntimeException{
     private int code = R.INTERNAL_SERVER_ERROR;
 
@@ -80,6 +92,5 @@ public class ServiceException extends RuntimeException{
     public static ServiceException busy(){
         return new ServiceException("数据库忙",R.INTERNAL_SERVER_ERROR);
     }
-
 
 }

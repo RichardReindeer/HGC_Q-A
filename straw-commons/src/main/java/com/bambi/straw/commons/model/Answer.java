@@ -15,7 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * <p>
- * 
+ *   数据库Answer表参数实体类
  * </p>
  *
  * @author MR.Bambi

@@ -1,6 +1,5 @@
 package com.bambi.straw.search.controller;
 
-import com.bambi.straw.commons.vo.R;
 import com.bambi.straw.search.service.IQuestionService;
 import com.bambi.straw.search.vo.QuestionVo;
 import com.github.pagehelper.PageInfo;
