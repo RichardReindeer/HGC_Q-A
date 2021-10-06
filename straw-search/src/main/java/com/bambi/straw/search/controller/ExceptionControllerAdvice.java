@@ -2,6 +2,7 @@ package com.bambi.straw.search.controller;
 
 
 import com.bambi.straw.commons.service.ServiceException;
+import com.bambi.straw.commons.vo.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

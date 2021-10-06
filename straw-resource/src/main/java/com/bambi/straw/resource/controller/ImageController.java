@@ -1,5 +1,6 @@
 package com.bambi.straw.resource.controller;
 
+import com.bambi.straw.commons.vo.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
