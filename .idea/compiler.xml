@@ -7,13 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="straw-kafka" />
         <module name="straw-search" />
         <module name="straw-sys" />
         <module name="straw-commons" />
         <module name="straw-faq" />
-        <module name="straw-generator" />
-        <module name="straw-portal" />
         <module name="straw-eureka" />
         <module name="straw-gateway" />
         <module name="straw-resource" />

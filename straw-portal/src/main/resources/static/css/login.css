@@ -1,9 +1,0 @@
-@charset "UTF-8";
-.has-icon{
-    position: relative;
-}
-.form-control-icon{
-    position: absolute;
-    top: 11px;
-    right: 12px;
-}
