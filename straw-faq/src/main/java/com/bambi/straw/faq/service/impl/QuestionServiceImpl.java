@@ -302,6 +302,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         return null;
     }
 
+    /**
+     * 获取热点问题
+     * @param username
+     * @return
+     */
     @Override
     public PageInfo<Question> getHotQuestion(String username) {
         if(Strings.isEmpty(username)){

@@ -1,7 +1,7 @@
 
 
 /*
-显示当前用户的问题
+显示当前用户的热点问题
  */
 let hotQuestion  = new Vue({
     el:'#hotQuestion',
