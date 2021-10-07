@@ -161,7 +161,8 @@
                 </div>
             </div>
         </div>
-    </div><!-- 查看邀请码modal-->
+    </div>
+    <!-- 查看邀请码modal-->
 </header>
 <div class="container-fluid  mt-3 mb-1">
     <div class="row mx-1">
@@ -191,107 +192,27 @@
                         <span class="font-weight-light p-2" v-text="collects.createtime">2020-05-12 09:50:11</span>
                     </p>
                 </div>
-                <!--<div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>
-                <div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>
-                <div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>
-                <div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>
-                <div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>
-                <div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>
-                <div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>
-                <div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>
-                <div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>-->
             </div>
             <!--分页信息-->
             <div class="row mt-2">
                 <div class="col-6 offset-3">
                     <nav aria-label="Page navigation example">
                         <div class="pagination">
-                            <a class="page-item page-link" href="#">Previous</a>
-                            <a class="page-item page-link" href="#">1</a>
-                            <a class="page-item page-link" href="#">2</a>
-                            <a class="page-item page-link" href="#">3</a>
-                            <a class="page-item page-link" href="#">Next</a>
+                            <!--href = "#"指当前页 .prevent阻止跳转-->
+                            <a class="page-item page-link" href="#"
+                               v-on:click.prevent="loadQuestions(pageInfo.prePage)"
+                            >上一页</a>
+
+                            <!--页码按钮需要循环 实现按上下页按钮跳转，按页码跳转，所在页码，页码按钮变高亮-->
+
+                            <a class="page-item page-link " href="#"
+                               v-for="n in pageInfo.navigatepageNums"
+                               v-on:click.prevent="loadQuestions(n)"
+                               v-bind:class="{'bg-secondary text-light': n==pageInfo.pageNum}"
+                            > <span v-text="n">1</span> </a>
+                            <a class="page-item page-link" href="#"
+                               v-on:click.prevent="loadQuestions(pageInfo.nextPage)"
+                            >下一页</a>
                         </div>
                     </nav>
                 </div>
