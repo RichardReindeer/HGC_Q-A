@@ -23,8 +23,10 @@ let collectQuestions = new Vue({
                 success: function (r) {
                     console.log("collectQuestions 成功加载数据");
                     console.log(r);
-                    if(r.code === 'OK'){
+                    if(r.code === OK){
+                        console.log("collectQuestions 成功加载数据");
                         collectQuestions.questions = r.data.list;
+                        console.log("获取到的数据-->"+questionsApp.questions.length)
                         collectQuestions.pageInfo = r.data;
                         //为question对象添加持续时间属性
                         collectQuestions.updateDuration();
