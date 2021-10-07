@@ -139,6 +139,10 @@ public class QuestionController {
             @AuthenticationPrincipal UserDetails userDetails
             ){
         logger.info("hotQuestions is starting");
+        if(userDetails==null){
+            logger.error("userDetails is null");
+            R.invalidRequest("用户信息异常");
+        }
         PageInfo<Question> hotQuestion = questionService.getHotQuestion(userDetails.getUsername());
         logger.info("hotQuestion list size {}",hotQuestion.getSize());
         return R.ok(hotQuestion);

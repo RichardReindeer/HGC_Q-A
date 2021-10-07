@@ -644,189 +644,30 @@
                 </div>
             </div>
             <!--热点数据-->
-            <div class="container-fluid bg-light mt-5">
+            <div class="container-fluid bg-light mt-5" id="hotQuestion" th:fragment="hot_question">
                 <h4 class="m-2 p-2 font-weight-light"><i class="fa fa-list" aria-hidden="true"></i> 热点问题</h4>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
+                <div class="list-group list-group-flush" v-for="question in questionsList">
+                    <a href="question/detail.html" class="list-group-item list-group-item-action"
+                       v-bind:href="'/question/detail.html?'+question.id">
                         <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
+                            <h6 class="mb-1 text-dark" v-text="question.title">java基础作业03</h6>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
+                                <small class="text-warning" style="display: none"
+                                       v-show="question.status==0">未回复</small>
+                                <small class="text-info" style="display: none" v-show="question.status==1">未解决</small>
+                                <small class="text-success" v-show="question.status==2">已解决</small>
                             </div>
                             <div class="col-6 text-right">
-                                <small>10浏览</small>
+                                <small>
+                                    <span v-text="question.pageViews">11浏览</span>
+                                </small>
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
-                            </div>
-                            <div class="col-6 text-right">
-                                <small>10浏览</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
-                            </div>
-                            <div class="col-6 text-right">
-                                <small>10浏览</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
-                            </div>
-                            <div class="col-6 text-right">
-                                <small>10浏览</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
-                            </div>
-                            <div class="col-6 text-right">
-                                <small>10浏览</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
-                            </div>
-                            <div class="col-6 text-right">
-                                <small>10浏览</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
-                            </div>
-                            <div class="col-6 text-right">
-                                <small>10浏览</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
-                            </div>
-                            <div class="col-6 text-right">
-                                <small>10浏览</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
-                            </div>
-                            <div class="col-6 text-right">
-                                <small>10浏览</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="list-group list-group-flush">
-                    <a href="question/detail.html" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-dark">equals和==的区别是啥？</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <small class="mr-2">1条回答</small>
-                                <small class="text-warning" style="display: none">未回复</small>
-                                <small class="text-info" style="display: none">未解决</small>
-                                <small class="text-success">已解决</small>
-                            </div>
-                            <div class="col-6 text-right">
-                                <small>10浏览</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
             </div>
         </div>
         <!-- / class="col-4"-->
@@ -845,4 +686,5 @@
 <script src="js/utils.js"></script>
 <script src="js/tags_nav.js"></script>
 <script src="js/user_info.js"></script>
+<script src="js/hotQuestion.js"></script>
 </html>
