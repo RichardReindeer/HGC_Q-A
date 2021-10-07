@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author MR.Bambi
@@ -45,12 +45,12 @@ public class QuestionController {
             //下面的注解会从Spring-Security中获得用户详情对象
             @AuthenticationPrincipal UserDetails userDetails,
             Integer pageNum
-            ){
-        log.debug("开始查询当前登录用户问题列表,用户名{}"+userDetails.getUsername());
+    ) {
+        log.debug("开始查询当前登录用户问题列表,用户名{}" + userDetails.getUsername());
         //定死查询条数
         Integer pageSize = 8;
         //调用查询所有学生问题列表
-        PageInfo<Question> pageInfo = questionService.getMyQuestions(userDetails.getUsername(),pageNum,pageSize);
+        PageInfo<Question> pageInfo = questionService.getMyQuestions(userDetails.getUsername(), pageNum, pageSize);
         return R.ok(pageInfo);
     }
 
@@ -60,20 +60,20 @@ public class QuestionController {
             @Validated
                     QuestionVo questionVo, BindingResult result,
             @AuthenticationPrincipal
-            UserDetails userDetails){
-        log.debug("获得的实体类信息:{}",questionVo);
+                    UserDetails userDetails) {
+        log.debug("获得的实体类信息:{}", questionVo);
 
         //如果用户填写的信息有错误，则将错误信息记录
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             String message = result.getFieldError().getDefaultMessage();
             return R.unproecsableEntity(message);
         }
-         //这里应该调用 业务逻辑层来进行新增操作
-        try{
+        //这里应该调用 业务逻辑层来进行新增操作
+        try {
             questionService.saveQuestion(questionVo, userDetails.getUsername());
             return R.ok("发布问题完成");
-        }catch (ServiceException exception){
-            log.error("保存失败",exception);
+        } catch (ServiceException exception) {
+            log.error("保存失败", exception);
             return R.failed(exception);
         }
 
@@ -85,12 +85,12 @@ public class QuestionController {
     @PreAuthorize("hasRole('ROLE_TEACHER')")
     public R<PageInfo<Question>> teacher(
             @AuthenticationPrincipal
-            UserDetails userDetails,
+                    UserDetails userDetails,
             Integer pageNum
-    ){
-        if(pageNum==null) pageNum=1;
+    ) {
+        if (pageNum == null) pageNum = 1;
         Integer pageSize = 8;
-        PageInfo<Question> pageInfo = questionService.getQuestionByTeacherName(userDetails.getUsername(),pageNum,pageSize);
+        PageInfo<Question> pageInfo = questionService.getQuestionByTeacherName(userDetails.getUsername(), pageNum, pageSize);
         return R.ok(pageInfo);
     }
 
@@ -101,8 +101,8 @@ public class QuestionController {
 
     @GetMapping("/{id}")
     //@PathVariable表示匹配路径中的占位符，参数名称必须和占位符一致
-    public R<Question> question(@PathVariable Integer id){
-        if(id==null){
+    public R<Question> question(@PathVariable Integer id) {
+        if (id == null) {
             //非法请求
             return R.invalidRequest("ID不能为空");
         }
@@ -114,37 +114,61 @@ public class QuestionController {
     //根据用户id查询问题数的控制器方法
     //用于sys模块的Ribbon调用，是一个Rest接口
     @GetMapping("/count")
-    public Integer count(Integer userId){
+    public Integer count(Integer userId) {
         return questionService.countQuestionByUserId(userId);
     }
 
     //分页查询所有问题的Rest接口
     @GetMapping("/page")
-    public List<Question> questions(Integer pageNum,Integer pageSize){
-        PageInfo<Question> questionPageInfo = questionService.getQuestion(pageNum,pageSize);
+    public List<Question> questions(Integer pageNum, Integer pageSize) {
+        PageInfo<Question> questionPageInfo = questionService.getQuestion(pageNum, pageSize);
         return questionPageInfo.getList();
     }
 
     //查询当前所有问题按照指定页面大小的总页数
     @GetMapping("/page/count")
-    public Integer pageCount(Integer pageSize ){
+    public Integer pageCount(Integer pageSize) {
         //MybatisPlus提供的返回当前表总行数的方法
         int rows = questionService.count();
         //根据之前学习的分页知识计算总页数
-        return (rows+pageSize-1)/pageSize;
+        return (rows + pageSize - 1) / pageSize;
     }
 
     @RequestMapping("/hotQuestion")
     public R<PageInfo<Question>> hotQuestions(
             @AuthenticationPrincipal UserDetails userDetails
-            ){
+    ) {
         logger.info("hotQuestions is starting");
-        if(userDetails==null){
+        if (userDetails == null) {
             logger.error("userDetails is null");
             R.invalidRequest("用户信息异常");
         }
         PageInfo<Question> hotQuestion = questionService.getHotQuestion(userDetails.getUsername());
-        logger.info("hotQuestion list size {}",hotQuestion.getSize());
+        logger.info("hotQuestion list size {}", hotQuestion.getSize());
         return R.ok(hotQuestion);
+    }
+
+    /**用户收藏页面，收藏问题显示
+     * @param userDetails
+     * @return
+     */
+    @RequestMapping("/myCollect")
+    public R<PageInfo<Question>> userCollectQuestion(
+            @AuthenticationPrincipal UserDetails userDetails,
+            Integer pageNum
+    ) {
+        logger.info("get request userCollectQuestion is starting ! ! !");
+        try {
+            Integer pageSize = 8;
+            PageInfo<Question>  usersCollectQuestion = questionService.getUsersCollectQuestion(userDetails.getUsername(),pageNum,pageSize);
+            logger.debug("pageInfo size {}",usersCollectQuestion.getSize());
+            logger.info("userCollectQuestion is ending");
+            return R.ok(usersCollectQuestion);
+        } catch (Exception e) {
+            logger.error("has some error in userCollectQuestion");
+            throw ServiceException.invalidRequest("存在异常");
+        }
+
+
     }
 }

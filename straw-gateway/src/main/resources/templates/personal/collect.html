@@ -152,24 +152,6 @@
                             <td>JSD1912-697441</td>
                             <td>2020-05-18 23:26:05</td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>JSD2001</td>
-                            <td>JSD2001-216850</td>
-                            <td>2020-05-18 23:26:05</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>JSD2002</td>
-                            <td>JSD2002-563302</td>
-                            <td>2020-05-18 23:26:05</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>JSD2003</td>
-                            <td>JSD2003-285267</td>
-                            <td>2020-05-18 23:26:05</td>
-                        </tr>
                         </tbody>
                     </table>
 
@@ -196,8 +178,20 @@
             <div class="alert alert-warning" role="alert" style="display: none">
                 抱歉！您还没有收藏内容哟
             </div>
-            <div class="list-unstyled">
-                <div class=" mt-4 bg-light media-body">
+            <div class="list-unstyled" id="collectQuestionsApp" th:fragment="collectQuestion">
+                <div class=" mt-4 bg-light media-body" v-for="collects in questions">
+                    <p>
+                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html"
+                           v-bind:href="'/question/detail.html?'+collects.id"
+                           v-text="collects.title">什么是对象序列化和反序列化</a>
+                        <a class="float-right btn btn-default">取消收藏</a>
+                    </p>
+                    <p>
+                        <span class="border-right p-2" v-text="collects.userNickName">小明</span>
+                        <span class="font-weight-light p-2" v-text="collects.createtime">2020-05-12 09:50:11</span>
+                    </p>
+                </div>
+                <!--<div class=" mt-4 bg-light media-body">
                     <p>
                         <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
                         <a class="float-right btn btn-default">取消收藏</a>
@@ -286,17 +280,7 @@
                         <span class="border-right p-2">小明</span>
                         <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
                     </p>
-                </div>
-                <div class=" mt-4 bg-light media-body">
-                    <p>
-                        <a class="mt-0 mb-1 h5 text-dark" href="../question/detail.html">什么是对象序列化和反序列化</a>
-                        <a class="float-right btn btn-default">取消收藏</a>
-                    </p>
-                    <p>
-                        <span class="border-right p-2">小明</span>
-                        <span class="font-weight-light p-2">2020-05-12 09:50:11</span>
-                    </p>
-                </div>
+                </div>-->
             </div>
             <!--分页信息-->
             <div class="row mt-2">
@@ -324,4 +308,5 @@
     </p>
 </footer>
 </body>
+<script src="../js/personal_Collect.js"></script>
 </html>

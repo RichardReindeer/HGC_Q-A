@@ -53,10 +53,13 @@ public interface QuestionMapper extends BaseMapper<Question> {
     List<Question> findHotQuestion(@Param("userId") Integer userId);
 
     /**
-     * 根据用户id查询用户收藏的 问题
+     * 根据用户id查询用户收藏的问题数
      * @param userId
      * @return
      */
     @Select("select count(*) from question where id in (select question_id from user_collect where user_collect.user_id = #{userId});")
     Integer findCollectQuestion(@Param("userId") Integer userId);
+
+    @Select("select * from question where id in (select question_id from user_collect where user_collect.user_id = #{userId})")
+    List<Question> findUserCollectQuestions(@Param("userId") Integer userId);
 }

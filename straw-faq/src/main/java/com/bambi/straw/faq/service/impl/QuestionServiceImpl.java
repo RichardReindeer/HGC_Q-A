@@ -304,18 +304,19 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
     /**
      * 获取热点问题
+     *
      * @param username
      * @return
      */
     @Override
     public PageInfo<Question> getHotQuestion(String username) {
-        if(Strings.isEmpty(username)){
+        if (Strings.isEmpty(username)) {
             logger.error("userName is null");
             return null;
         }
         User user = ribbonClient.getUser(username);
         List<Question> hotQuestion = questionMapper.findHotQuestion(user.getId());
-        logger.info("当前问题数:{}" , hotQuestion.size());
+        logger.info("当前问题数:{}", hotQuestion.size());
         hotQuestion.forEach(question -> {
             List<Tag> tags = tagNames2Tags(question.getTagNames());
             question.setTags(tags);
@@ -328,7 +329,29 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     public Integer getCollectQuestion(Integer userId) {
         logger.info("getCollectQuestion is starting ! ! !");
         Integer collectQuestion = questionMapper.findCollectQuestion(userId);
-        logger.info("收藏的问题数为:{}",collectQuestion);
+        logger.info("收藏的问题数为:{}", collectQuestion);
         return collectQuestion;
+    }
+
+    /**
+     * 根据用户信息获取用户收藏的问题
+     * 自测通过
+     *
+     * @param username
+     * @return
+     */
+    @Override
+    public PageInfo<Question> getUsersCollectQuestion(String username , Integer pageNum, Integer pageSize) {
+        logger.info("GetUserCollectQuestion is starting ! ! !");
+        User user = ribbonClient.getUser(username);
+        logger.debug("获取到对应user ==============> {}", user.getNickname());
+        PageHelper.startPage(pageNum, pageSize);
+        List<Question> userCollectQuestions = questionMapper.findUserCollectQuestions(user.getId());
+        userCollectQuestions.forEach(question -> {
+            List<Tag> tags = tagNames2Tags(question.getTagNames());
+            question.setTags(tags);
+        });
+        logger.info("getUserCollectQuestion is ending ");
+        return new PageInfo<Question>(userCollectQuestions);
     }
 }

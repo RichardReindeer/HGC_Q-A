@@ -17,24 +17,33 @@ class StrawFaqApplicationTests {
     IQuestionService questionService;
     @Resource
     IUserCollectService userCollectService;
+
     @Test
     void contextLoads() {
-        PageInfo<Question> questionList = questionService.getMyQuestions("st2",1,8);
+        PageInfo<Question> questionList = questionService.getMyQuestions("st2", 1, 8);
         questionList.getList().forEach(question -> System.out.println("question = " + question));
     }
 
     @Test
-    void hotQuestion(){
+    void hotQuestion() {
         PageInfo<Question> st2 = questionService.getHotQuestion("st2");
         st2.getList().forEach(question -> {
-            System.out.println("Question = "+question.getTitle());
+            System.out.println("Question = " + question.getTitle());
         });
     }
 
     @Test
-    void collect(){
+    void collect() {
         Integer integer = userCollectService.countQuestionCollectionByUserId(11);
         System.out.println(integer);
+    }
+
+    @Test
+    void setUserCollectService() {
+        PageInfo<Question> st2 = questionService.getUsersCollectQuestion("st2",1,8);
+        st2.getList().forEach(question -> {
+            System.out.println(question.getTitle());
+        });
     }
 
 }

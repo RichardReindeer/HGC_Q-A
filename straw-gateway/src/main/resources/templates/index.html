@@ -189,10 +189,10 @@
                                 <div class="col-md-12 col-lg-2">
                                     <!--v-show 决定是否显示当前内容-->
                                     <span class="badge badge-pill badge-warning" style="display: none"
-                                          v-show="question.status==0">未回复</span>
+                                          v-show="question.status==0">未审阅</span>
                                     <span class="badge badge-pill badge-info" style="display: none"
                                           v-show="question.status==1">已回复</span>
-                                    <span class="badge badge-pill badge-success" v-show="question.status==2">已解决</span>
+                                    <span class="badge badge-pill badge-success" v-show="question.status==2">已审阅</span>
                                 </div>
                                 <div class="col-md-12 col-lg-10">
                                     <h5 class="mt-0 mb-1 text-truncate">
