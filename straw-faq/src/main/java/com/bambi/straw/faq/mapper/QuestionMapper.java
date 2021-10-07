@@ -51,4 +51,12 @@ public interface QuestionMapper extends BaseMapper<Question> {
      */
     @Select("select * from question where user_id = #{userId} and delete_status = 0 order by page_views desc ")
     List<Question> findHotQuestion(@Param("userId") Integer userId);
+
+    /**
+     * 根据用户id查询用户收藏的 问题
+     * @param userId
+     * @return
+     */
+    @Select("select count(*) from question where id in (select question_id from user_collect where user_collect.user_id = #{userId});")
+    Integer findCollectQuestion(@Param("userId") Integer userId);
 }

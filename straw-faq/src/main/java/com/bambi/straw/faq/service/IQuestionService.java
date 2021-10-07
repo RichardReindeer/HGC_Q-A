@@ -50,4 +50,11 @@ public interface IQuestionService extends IService<Question> {
      * @return
      */
     PageInfo<Question> getHotQuestion(String username);
+
+    @Deprecated
+    /**
+     * 根据用户信息获取收藏问题数
+     * @return
+     */
+    Integer getCollectQuestion(Integer userId);
 }

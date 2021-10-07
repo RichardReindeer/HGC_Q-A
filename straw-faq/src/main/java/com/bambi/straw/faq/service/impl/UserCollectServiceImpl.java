@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  *  服务实现类
@@ -23,6 +25,7 @@ public class UserCollectServiceImpl extends ServiceImpl<UserCollectMapper, UserC
     private UserCollectMapper userCollectMapper;
     @Override
     public Integer countQuestionCollectionByUserId(Integer userId) {
+
         QueryWrapper<UserCollect> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
         //查询到的收藏数

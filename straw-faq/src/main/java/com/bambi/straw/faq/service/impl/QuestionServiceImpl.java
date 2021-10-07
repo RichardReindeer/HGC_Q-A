@@ -322,4 +322,13 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         });
         return new PageInfo<Question>(hotQuestion);
     }
+
+    @Deprecated
+    @Override
+    public Integer getCollectQuestion(Integer userId) {
+        logger.info("getCollectQuestion is starting ! ! !");
+        Integer collectQuestion = questionMapper.findCollectQuestion(userId);
+        logger.info("收藏的问题数为:{}",collectQuestion);
+        return collectQuestion;
+    }
 }
