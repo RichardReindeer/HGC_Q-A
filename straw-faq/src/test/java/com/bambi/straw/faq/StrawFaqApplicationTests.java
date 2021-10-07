@@ -20,4 +20,12 @@ class StrawFaqApplicationTests {
         questionList.getList().forEach(question -> System.out.println("question = " + question));
     }
 
+    @Test
+    void hotQuestion(){
+        PageInfo<Question> st2 = questionService.getHotQuestion("st2");
+        st2.getList().forEach(question -> {
+            System.out.println("Question = "+question.getTitle());
+        });
+    }
+
 }

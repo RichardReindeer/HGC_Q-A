@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,4 +44,11 @@ public interface QuestionMapper extends BaseMapper<Question> {
     )
     List<Question> findQuestionWithTag(@Param("tagNum") Integer tagNum,@Param("userId") Integer userId);
 
+    /**
+     * 获取问题，并按浏览量倒叙
+     * @param userId
+     * @return
+     */
+    @Select("select * from question where user_id = #{userId} and delete_status = 0 order by page_views desc ")
+    List<Question> findHotQuestion(@Param("userId") Integer userId);
 }

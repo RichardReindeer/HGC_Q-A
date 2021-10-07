@@ -43,4 +43,11 @@ public interface IQuestionService extends IService<Question> {
      * @return
      */
     PageInfo<Question> getQuestionWithTag(String username , Integer tagNum ,Integer pageNum, Integer pageSize);
+
+    /**
+     * 获取热点问题
+     * @param username
+     * @return
+     */
+    PageInfo<Question> getHotQuestion(String username);
 }

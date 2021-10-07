@@ -14,9 +14,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -298,5 +300,21 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         }
         logger.error("user==null !! in QuestionServiceImpl");
         return null;
+    }
+
+    @Override
+    public PageInfo<Question> getHotQuestion(String username) {
+        if(Strings.isEmpty(username)){
+            logger.error("userName is null");
+            return null;
+        }
+        User user = ribbonClient.getUser(username);
+        List<Question> hotQuestion = questionMapper.findHotQuestion(user.getId());
+        logger.info("当前问题数:{}" , hotQuestion.size());
+        hotQuestion.forEach(question -> {
+            List<Tag> tags = tagNames2Tags(question.getTagNames());
+            question.setTags(tags);
+        });
+        return new PageInfo<Question>(hotQuestion);
     }
 }

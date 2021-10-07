@@ -2,12 +2,16 @@ package com.bambi.straw.faq.controller;
 
 
 import com.bambi.straw.commons.model.Question;
+import com.bambi.straw.commons.model.User;
 import com.bambi.straw.commons.service.ServiceException;
 import com.bambi.straw.commons.vo.R;
 import com.bambi.straw.faq.service.IQuestionService;
 import com.bambi.straw.faq.vo.QuestionVo;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.flogger.Flogger;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +34,7 @@ import java.util.List;
 @RequestMapping("/v1/questions")
 @Slf4j
 public class QuestionController {
-
+    private static Logger logger = LoggerFactory.getLogger(QuestionController.class);
     @Autowired
     IQuestionService questionService;
 
@@ -128,5 +132,15 @@ public class QuestionController {
         int rows = questionService.count();
         //根据之前学习的分页知识计算总页数
         return (rows+pageSize-1)/pageSize;
+    }
+
+    @RequestMapping("/hotQuestion")
+    public R<PageInfo<Question>> hotQuestions(
+            @AuthenticationPrincipal UserDetails userDetails
+            ){
+        logger.info("hotQuestions is starting");
+        PageInfo<Question> hotQuestion = questionService.getHotQuestion(userDetails.getUsername());
+        logger.info("hotQuestion list size {}",hotQuestion.getSize());
+        return R.ok(hotQuestion);
     }
 }
